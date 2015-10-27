@@ -39,6 +39,8 @@ def processSignUp(request):
 
             return render(request, 'flitterMainApp/successfulCreationOfUser.html', {'firstName': firstName})
 
+    return HttpResponseRedirect('/signUp')
+
 def authenticateUser(request):
     if request.method == 'POST':
         form = AuthenticationForm(request.POST)
