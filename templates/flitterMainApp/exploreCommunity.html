@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body background="{% static "images/homeBg.png" %}">
+    <br><br><center>
+    <div class="jumbotron">
+        <img src="{% static "images/flitterBannerForHome.png" %}" class="img" alt="logo">
+    </div>
+    <div class="container">
+        <div class="jumbotron">
+        	<h2>Here are the username(s) of some registered users:</h2>
+			{% for username in usernameList %}
+				<hr>
+				<p><b>{{ username }}<b></p>
+				<form method="POST" action="/processFollow/">
+					{% csrf_token %}
+					<button type="submit" name="followButton" value="{{ username }}" align="right" class="btn">Follow</button>
+				</form>
+			{% endfor %}
+			<br>
+			<button type="button" class="btn"><a href="/home">Return to home page</a></button>
+        </div>
+    </div>
+    </center>
+</body>
+</html>

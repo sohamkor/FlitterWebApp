@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body background="{% static "images/authBg.png" %}">
+    <br><br><br><br><br><br><center>
+    <div class="container">
+        <div class="jumbotron">
+        <img src="{% static "images/mainTitleForFlitter.png" %}" class="img" alt="Logo" width="350" height="165">
+        <br><br>
+        <form method="post" action="/generate/">
+            {% csrf_token %}
+			{{ authForm | linebreaksbr }}
+			<br><br>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <br>
+        <p>Don't have an account? Sign up <a href="/signUp"><span class="label label-info">here</span></a></p>
+        </div>
+    </div>
+    </center>
+</body>
+</html>

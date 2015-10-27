@@ -1,0 +1,52 @@
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body background="{% static "images/homeBg.png" %}">
+    <br><br><center>
+    <div class="jumbotron">
+        <img src="{% static "images/flitterBannerForHome.png" %}" class="img" alt="logo">
+    </div>
+    <div class="container">
+        <div class="jumbotron">
+        	<h2>Here are the results of the search '{{ searchTerms }}':</h2>
+			{% for username in searchList %}
+				<hr>
+				<p><b>{{ username.user.username }}<b></p>
+				{% if not username in peopleImFollowing %}
+				<form method="POST" action="/processFollow/">
+					{% csrf_token %}
+					<button type="submit" name="followButton" value="{{ username.user.username }}" align="right" class="btn">Follow</button>
+				</form>
+				{% else %}
+					<span class="label label-primary">You already follow this user.</span>
+					<br><br><br>
+					<form method="POST" action="/processUnFollow/">
+						{% csrf_token %}
+						<button type="submit" name="unfollowButton" value="{{ username.user.username }}" align="right" class="btn">Unfollow</button>
+					</form>
+				{% endif %}
+			{% endfor %}
+			{% for usernameOfNonFleeter in peopleButNotFleeters %}
+				<hr>
+				<p><b>{{ usernameOfNonFleeter }}</b></p>
+				<span class="label label-primary">This user hasn't posted any updates yet. After they post atleast one you can follow them.</span>
+			{% endfor %}
+			{% if not searchList %}
+				{% if not peopleButNotFleeters %}
+					<hr>
+					<p><b>No users found.</b></p>
+				{% endif %}
+			{% endif %}
+			<br>
+			<button type="button" class="btn"><a href="/home">Return to home page</a></button>
+        </div>
+    </div>
+    </center>
+</body>
+</html>
