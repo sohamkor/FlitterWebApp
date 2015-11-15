@@ -177,6 +177,8 @@ def searchPage(request):
 
             return render(request, 'flitterMainApp/searchPage.html', {'searchTerms': searchTerms, 'searchList': searchList, 'peopleButNotFleeters': peopleButNotFleeters, 'peopleImFollowing': peopleImFollowing})
 
+    return HttpResponseRedirect('/home')
+
 def processFollow(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/')
