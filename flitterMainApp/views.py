@@ -28,6 +28,19 @@ def processSignUp(request):
             lastName = form.cleaned_data['lastNameBox']
             userName = form.cleaned_data['usernameBox']
             passWord = form.cleaned_data['passwordBox']
+            confirmedPassWord = form.cleaned_data['confirmPasswordBox']
+
+            if len(passWord) < 5:
+                error_msg = "The password you have chosen is too short. Please pick a longer one."
+                return render(request, 'flitterMainApp/userError.html', {'message':error_msg})
+
+            if passWord != confirmedPassWord:
+                error_msg = "The passwords don't match."
+                return render(request, 'flitterMainApp/userError.html', {'message':error_msg})
+
+            if User.objects.filter(username=userName).exists():
+                error_msg = "The username chosen has already been taken. Please pick another one."
+                return render(request, 'flitterMainApp/userError.html', {'message':error_msg})
 
             user = User.objects.create_user(userName, password=passWord)
             user.first_name = firstName
@@ -54,7 +67,8 @@ def authenticateUser(request):
                 login(request, mainUser)
                 return HttpResponseRedirect('/home')
             else:
-                return render(request, 'flitterMainApp/incorrectCredentials.html', {'username':username})
+                error_msg = "The username or password you entered doesn't seem to be right."
+                return render(request, 'flitterMainApp/userError.html', {'username':username, 'message':error_msg})
         else:
             return HttpResponseRedirect('/')
     else:

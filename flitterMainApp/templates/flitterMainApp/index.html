@@ -7,20 +7,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
-<body background="{% static "images/authBg.png" %}">
+<body background="{% static "flitterMainApp/images/authBg.png" %}">
     <br><br><br><br><br><br><center>
     <div class="container">
         <div class="jumbotron">
-        <img src="{% static "images/mainTitleForFlitter.png" %}" class="img" alt="Logo" width="350" height="165">
+        <img src="{% static "flitterMainApp/images/mainTitleForFlitter.png" %}" class="img" alt="Logo" width="362" height="168">
         <br><br>
-        <form method="post" action="/generate/">
+        <form method="post" action="{% url 'flitterMainApp:authenticate' %}">
             {% csrf_token %}
-			{{ authForm | linebreaksbr }}
-			<br><br>
-            <button type="submit" class="btn">Login</button>
+            {{ authForm | linebreaksbr }}
+            <br><br>
+            <button class="btn btn-default" type="submit">Login</button>
         </form>
         <br>
-        <p>Don't have an account? Sign up <a href="/signUp"><span class="label label-info">here</span></a></p>
+        <p>Don't have an account? Sign up <a class="label label-info" href="{% url 'flitterMainApp:signUp' %}">here</a></p>
         </div>
     </div>
     </center>

@@ -7,15 +7,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
-<body background="{% static "images/authBg.png" %}">
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><center>
-    <div class="container">
-        <div class="jumbotron">
-            <p>Thanks {{ firstName }}, your account was successfully created!</p>
-            <br>
-            <a href="/"><span class="label label-info">Login</span></a>
+<body background="{% static "flitterMainApp/images/authBg.png" %}">
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <center>
+        <div class="container">
+            <div class="jumbotron">
+                <p>{{ message }}<p>
+                <a class="btn btn-success" href="{% url 'flitterMainApp:home' %}">Try Again</a>
+            </div>
         </div>
-    </div>
     </center>
 </body>
 </html>
