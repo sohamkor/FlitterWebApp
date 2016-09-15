@@ -1,0 +1,86 @@
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <style media="screen" type="text/css">
+        #infoAndWelcomeFrame {
+            margin-left: 30px;
+            margin-right: 30px;
+        }
+        #searchFrame {
+            margin-left:30px;
+        }
+        #statusUpdateFrame {
+            margin-left:55px;
+        }
+        #contentSection {
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body background="{% static "flitterMainApp/images/homeBg.png" %}">
+    <br><br><center>
+    <div class="jumbotron">
+            <img src="{% static "flitterMainApp/images/flitterBannerForHome.png" %}" class="img" alt="logo">
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="container">
+            <div class="jumbotron text-center col-md-3" id="infoAndWelcomeFrame">
+                <h4>Welcome, {{ username }}</h4>
+                <br>
+                <p>Posts: <span class="badge">{{ postCount }}</span></p>
+                <p>Following: <span class="badge">{{ followedCount }}</span></p>
+                <p>Followers: <span class="badge">{{ followersCount }}</span></p>
+                <br>
+                <a class="btn btn-warning" href="{% url 'flitterMainApp:logOff' %}">Log Off</a>
+            </div>
+
+            <div class="jumbotron text-center col-md-5" id="contentSection">
+                {% if postCount == 0 and not allPostsForMyFeed %}
+                    <h2>Thanks for joining!</h2><br>
+                    <h3>Get started by posting your own status updates and finding people
+                    to get updates from using the search bar.</h3>
+                {% else %}
+                    <h2>Good to see you again!</h2>
+                    <h6>Here's your latest feed:</h6>
+                {% endif %}
+
+                {% for post in allPostsForMyFeed %}
+                    <hr>
+                    <h4 align="left">{{ post.contentString }}</h4>
+                    <br>
+                    {% if post.fleeter.user.username == myUsername %}
+                        <p style="font-size:95%" align="right">- Me, {{ post.dateTimePosted }}</p>
+                    {% else %}
+                        <p style="font-size:95%" align="right">- {{ post.fleeter.user.username}}, {{ post.dateTimePosted }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="jumbotron text-center col-md-3" id="searchFrame">
+                <a class="btn btn-primary" href="{% url 'flitterMainApp:postStatusUpdate' %}">Post a status update</a>
+                <br><br>
+                <h5>Find more people to follow by searching for their user names:</h5>
+                <form method="post" action="{% url 'flitterMainApp:searchPage' %}">
+                    {% csrf_token %}
+                    {{ searchForm | linebreaksbr }}
+                    <br><br>
+                    <button type="submit" class="btn btn-default">Go</button>
+                </form>
+                <hr>
+                <a href="{% url 'flitterMainApp:exploreCommunity' %}">Find people to follow</a>
+                <hr>
+                <p style="font-size:95%">Scroll down to view recent updates and posts.</p>
+            </div>
+        </div>
+    </div>
+    </center>
+</body>
+</html>

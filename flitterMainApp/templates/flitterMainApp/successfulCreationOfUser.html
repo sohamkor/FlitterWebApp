@@ -7,11 +7,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
-<body background="{% static "images/authBg.png" %}">
+<body background="{% static "flitterMainApp/images/authBg.png" %}">
     <br><br><br><br><br><br><br><br><br><br><br><br><br><center>
     <div class="container">
         <div class="jumbotron">
-            <p>The username or password you entered doesn't seem to be right. <a href="/"><span class="label label-info">Try again</span></a></p>
+            <p>Thanks {{ firstName }}, your account was successfully created!</p>
+            <a class="btn btn-primary" href="{% url 'flitterMainApp:home' %}">Login</a>
         </div>
     </div>
     </center>

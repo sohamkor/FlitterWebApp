@@ -16,20 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from flitterMainApp import views
-
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls), name='admin'),
-    url(r'^signUp/', views.signUpUser, name='signUp'),
-    url(r'^processSignUp/', views.processSignUp, name='processSignUp'),
-    url(r'^generate/', views.authenticateUser, name='authenticate'),
-    url(r'^home/', views.homePage, name='home'),
-    url(r'^postStatusUpdate/', views.postStatusUpdate, name='statusUpdate'),
-    url(r'^saveStatusUpdate/', views.saveStatusUpdate, name='saveStatusUpdate'),
-    url(r'^searchPage/', views.searchPage, name='searchPage'),
-    url(r'^processFollow/', views.processFollow, name='processFollow'),
-    url(r'^processUnFollow/', views.processUnFollow, name='processUnFollow'),
-    url(r'^exploreCommunity/', views.exploreCommunity, name='exploreCommunity'),
-    url(r'^logOff/', views.logOff, name='logOff'),
-    url(r'^$', views.index, name='index'),
+    url(r'', include('flitterMainApp.urls'), name='flitterHome')
 ]
